@@ -60,6 +60,21 @@ const ShopPage = () => {
     brands: [],
     priceRange: { min: 0, max: 150000 },
   });
+  const navbarCategories = [
+    { id: "electronics", slug: "electronics", name: "Electronics" },
+    { id: "fashion", slug: "fashion", name: "Fashion" },
+    { id: "beauty", slug: "beauty", name: "Beauty" },
+    { id: "home-living", slug: "home-living", name: "Home & Living" },
+  ];
+
+  const categoryOptions = [
+    ...meta.categories,
+    ...navbarCategories.filter(
+      (navCategory) =>
+        !meta.categories.some((category) => category.slug === navCategory.slug),
+    ),
+  ];
+
   const [loading, setLoading] = useState(true);
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
 
@@ -269,7 +284,7 @@ const ShopPage = () => {
             />
             <span>All Categories</span>
           </label>
-          {meta.categories.map((c) => (
+          {categoryOptions.map((c) => (
             <label
               key={c.id}
               style={{
@@ -287,9 +302,6 @@ const ShopPage = () => {
                 onChange={() => setSelectedCategory(c.slug)}
               />
               <span style={{ flex: 1 }}>{c.name}</span>
-              <span style={{ fontSize: "0.75rem", color: "var(--text-light)" }}>
-                ({c.count})
-              </span>
             </label>
           ))}
         </div>
